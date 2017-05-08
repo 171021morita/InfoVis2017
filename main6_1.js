@@ -17,7 +17,6 @@ function main()
     renderer.setSize( width, height );
     document.body.appendChild( renderer.domElement );
 
-//    var geometry = new THREE.BoxGeometry( 1, 1, 1 );
     var vertices = [ [-1,1,0],[-1,-1,0],[1,-1,0]//v0v1v2
 		     ,[-1,1,0],[1,1,0],[1,1,2]//v3v4v5
 		     ,[-1,1,0],[1,-1,0],[1,1,0]//v6v7v8
@@ -154,17 +153,10 @@ function main()
 
     geometry.computeFaceNormals();
 
-    //var material = new THREE.MeshBasicMaterial( { color: 0xffffff } );
- //   var material = new THREE.MeshLambertMaterial({color: 0xffffff});
-var material = new THREE.MeshPhongMaterial();
+    var material = new THREE.MeshPhongMaterial();
    material.vertexColors = THREE.FaceColors;
     geometry.faces[0].color = new THREE.Color(1,0,0);
-/*
-    material.vertexColors = THREE.VertexColors;
-    geometry.face[0].vertexColors.push(new TRHEE.Color(1,0,0));
-    geometry.face[0].vertexColors.push(new TRHEE.Color(0,1,0));
-    geometry.face[0].vertexColors.push(new TRHEE.Color(0,0,1));
- */
+
     material.side = THREE.DoubleSide;
   
     var cube = new THREE.Mesh( geometry, material );
@@ -175,34 +167,6 @@ var material = new THREE.MeshPhongMaterial();
     scene.add(light);
 
 
-
-document.addEventListener( 'mousedown', mouse_down_event );
-function mouse_down_event( event )
-{
-var x_win = event.clientX;
-var y_win = event.clientY;
-
-var vx = renderer.domElement.offsetLeft;
-var vy = renderer.domElement.offsetTop;
-var vw = renderer.domElement.width;
-var vh = renderer.domElement.height;
-
-var x_NDC = 2 * ( x_win -vx ) / vw - 1;
-var y_NDC = -( 2 * ( y_win - vy ) / vh - 1 );
-
-var p_NDC = new THREE.Vector3( x_NDC, y_NDC, 1 );
-var p_wld = p_NDC.unproject( camera );
-
-var raycaster = new THREE.Raycaster( camera.position, p_NDC.sub(camera.position).normalize());
-
-var intersects = raycaster.intersectObjects( scene.children );
-if( intersects.length > 0)
-{
-    intersects[0].face.color.setRGB( 1, 0, 0);
-    intersects[0].object.geometry.colorsNeedUpdate = true;
-}
-
-}
 
     loop();
 
