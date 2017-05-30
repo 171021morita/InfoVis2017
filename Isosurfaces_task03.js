@@ -1,8 +1,14 @@
 function Isosurfaces( volume, isovalue )
 {
     var geometry = new THREE.Geometry();
-    var material = new THREE.MeshLambertMaterial();
+    var material = new THREE.ShaderMaterial({
+                                            vertexColors: THREE.FaceColors,
+                                            vertexShader: document.getElementById('Phong.vert').text,
+                                            fragmentShader: document.getElementById('Phong.frag').text,
+                                            });
+    
 
+    
     var smin = volume.min_value;
     var smax = volume.max_value;
     isovalue = KVS.Clamp( isovalue, smin, smax );
@@ -75,15 +81,6 @@ function Isosurfaces( volume, isovalue )
     }
     
     material.color = new THREE.Color().setHex( cmap[ isovalue ][1] );
-    var material = new THREE.ShaderMaterial({
-                                            vertexColors: THREE.VertexColors,
-                                            vertexShader: document.getElementById('Phong.vert').text,
-                                            fragmentShader: document.getElementById('Phong.frag').text,
-                                            uniforms: {
-                                            light_position: { type: 'v3', value: light.position }
-                                            }
-                                            });
-
     return new THREE.Mesh( geometry, material );
 
 
