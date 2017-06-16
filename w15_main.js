@@ -39,6 +39,8 @@ function main()
     cubeloop();
     sphereloop();
     
+    document.getElementById('situation').innerHTML = "Shape = cube";
+    
     
     //sphereのボタンが押された時
     document.getElementById('Spherebutton')
@@ -46,6 +48,9 @@ function main()
                       
                       cube.visible = false;
                       sphere.visible = true;
+                      
+                      
+                      document.getElementById('situation').innerHTML = "Shape = sphere";
 
                       });
 
@@ -56,6 +61,7 @@ function main()
                       cube.visible = true;
                       sphere.visible = false;
                       
+                      document.getElementById('situation').innerHTML = "Shape = cube";
                       });
 
     
